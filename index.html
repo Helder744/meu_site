@@ -176,28 +176,78 @@
       }, 'google_translate_element');
     }
 <script>
-function translateTo(lang) {
-    function applyTranslation() {
-        var select = document.querySelector(".goog-te-combo");
-        if (select) {
-            select.value = lang;
-            select.dispatchEvent(new Event("change"));
-            return true;
-        }
-        return false;
-    }
+/*
+  Função robusta para traduzir a página.
+  - Tenta usar o .goog-te-combo (se existir)
+  - Se não existir, aguarda e tenta de novo
+  - Se tudo falhar, define o cookie googtrans e recarrega a página (fallback)
+*/
 
-    // Tenta aplicar imediatamente
-    if (!applyTranslation()) {
-        // Se não existir ainda, tenta várias vezes até funcionar
-        var interval = setInterval(function() {
-            if (applyTranslation()) {
-                clearInterval(interval);
-            }
-        }, 300);
+function setCookie(name, value, hours) {
+  var expires = "";
+  if (hours) {
+    var date = new Date();
+    date.setTime(date.getTime() + (hours*60*60*1000));
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+function applySelectLang(lang) {
+  var select = document.querySelector(".goog-te-combo");
+  if (!select) return false;
+  try {
+    select.value = lang;
+    // dispatchEvent compatível
+    var ev = new Event("change", { bubbles: true });
+    select.dispatchEvent(ev);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function translateTo(lang) {
+  // Se já estivermos no mesmo idioma, não faz nada (evita reload desnecessário)
+  try {
+    var htmlLang = document.documentElement.lang || "";
+    if ((lang === 'en' && htmlLang.startsWith('en')) || (lang === 'pt' && htmlLang.startsWith('pt'))) {
+      // ainda pode não estar traduzido pelo google, então não retorna 100% — mas evita reloads se já em pt/en
     }
+  } catch(e){}
+
+  // 1) tentativa imediata com select
+  if (applySelectLang(lang)) return;
+
+  // 2) polling: tenta por alguns segundos
+  var attempts = 0;
+  var maxAttempts = 15; // 15 * 300ms = ~4.5s
+  var interval = setInterval(function() {
+    attempts++;
+    if (applySelectLang(lang)) {
+      clearInterval(interval);
+      return;
+    }
+    if (attempts >= maxAttempts) {
+      clearInterval(interval);
+      // 3) fallback com cookie + reload
+      // formato do cookie: /<from>/<to> (ex: /pt/en). Vamos assumir que a página original é pt.
+      var from = 'pt';
+      var to = (lang === 'en' ? 'en' : 'pt');
+      try {
+        setCookie('googtrans', '/' + from + '/' + to, 24);
+        setCookie('googtrans', '/' + from + '/' + to, 24); // definido duas vezes por segurança
+      } catch (err) {
+        console.warn("Não foi possível setar cookie googtrans:", err);
+      }
+      // Forçar reload para que o widget (iframe) aplique a tradução com base no cookie.
+      // Usamos location.reload(true) em ambientes antigos; só location.reload() para compatibilidade.
+      location.reload();
+    }
+  }, 300);
 }
 </script>
+
 
 
 </body>
