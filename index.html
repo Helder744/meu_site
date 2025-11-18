@@ -175,20 +175,30 @@
         layout: google.translate.TranslateElement.InlineLayout.SIMPLE
       }, 'google_translate_element');
     }
-  </script>
-
-  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-  <!-- Função para trocar idioma pelas bandeiras -->
-  <script>
-    function translateTo(lang){
+<script>
+function translateTo(lang) {
+    function applyTranslation() {
         var select = document.querySelector(".goog-te-combo");
         if (select) {
             select.value = lang;
             select.dispatchEvent(new Event("change"));
+            return true;
         }
+        return false;
     }
-  </script>
+
+    // Tenta aplicar imediatamente
+    if (!applyTranslation()) {
+        // Se não existir ainda, tenta várias vezes até funcionar
+        var interval = setInterval(function() {
+            if (applyTranslation()) {
+                clearInterval(interval);
+            }
+        }, 300);
+    }
+}
+</script>
+
 
 </body>
 </html>
