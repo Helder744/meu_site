@@ -1,3 +1,13 @@
+/* Esconde completamente o widget e barra do Google Translate */
+#google_translate_element,
+.goog-te-banner-frame,
+.goog-te-gadget {
+    display: none !important;
+}
+body {
+    top: 0 !important;
+}
+
 body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
 header { background: #333; color: #fff; padding: 20px; text-align: center; }
 .intro { padding: 20px; text-align: center; }
