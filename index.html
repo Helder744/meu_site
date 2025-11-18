@@ -164,9 +164,10 @@
     </section>
   </main>
 
-  <!-- ==== GOOGLE TRANSLATE INVISÍVEL ==== -->
+    <!-- ==== GOOGLE TRANSLATE INVISÍVEL ==== -->
   <div id="google_translate_element"></div>
 
+  <!-- SCRIPT GOOGLE TRANSLATE -->
   <script type="text/javascript">
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({
@@ -175,78 +176,64 @@
         layout: google.translate.TranslateElement.InlineLayout.SIMPLE
       }, 'google_translate_element');
     }
-<script>
-/*
-  Função robusta para traduzir a página.
-  - Tenta usar o .goog-te-combo (se existir)
-  - Se não existir, aguarda e tenta de novo
-  - Se tudo falhar, define o cookie googtrans e recarrega a página (fallback)
-*/
+  </script>
 
-function setCookie(name, value, hours) {
-  var expires = "";
-  if (hours) {
-    var date = new Date();
-    date.setTime(date.getTime() + (hours*60*60*1000));
-    expires = "; expires=" + date.toUTCString();
-  }
-  document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
+  <!-- CARREGA O SCRIPT DO GOOGLE (ESTE É O QUE FALTAVA!!) -->
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-function applySelectLang(lang) {
-  var select = document.querySelector(".goog-te-combo");
-  if (!select) return false;
-  try {
-    select.value = lang;
-    // dispatchEvent compatível
-    var ev = new Event("change", { bubbles: true });
-    select.dispatchEvent(ev);
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
-function translateTo(lang) {
-  // Se já estivermos no mesmo idioma, não faz nada (evita reload desnecessário)
-  try {
-    var htmlLang = document.documentElement.lang || "";
-    if ((lang === 'en' && htmlLang.startsWith('en')) || (lang === 'pt' && htmlLang.startsWith('pt'))) {
-      // ainda pode não estar traduzido pelo google, então não retorna 100% — mas evita reloads se já em pt/en
-    }
-  } catch(e){}
-
-  // 1) tentativa imediata com select
-  if (applySelectLang(lang)) return;
-
-  // 2) polling: tenta por alguns segundos
-  var attempts = 0;
-  var maxAttempts = 15; // 15 * 300ms = ~4.5s
-  var interval = setInterval(function() {
-    attempts++;
-    if (applySelectLang(lang)) {
-      clearInterval(interval);
-      return;
-    }
-    if (attempts >= maxAttempts) {
-      clearInterval(interval);
-      // 3) fallback com cookie + reload
-      // formato do cookie: /<from>/<to> (ex: /pt/en). Vamos assumir que a página original é pt.
-      var from = 'pt';
-      var to = (lang === 'en' ? 'en' : 'pt');
-      try {
-        setCookie('googtrans', '/' + from + '/' + to, 24);
-        setCookie('googtrans', '/' + from + '/' + to, 24); // definido duas vezes por segurança
-      } catch (err) {
-        console.warn("Não foi possível setar cookie googtrans:", err);
+  <!-- FUNÇÃO DE TRADUÇÃO FUNCIONAL -->
+  <script>
+    function setCookie(name, value, hours) {
+      var expires = "";
+      if (hours) {
+        var date = new Date();
+        date.setTime(date.getTime() + (hours*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
       }
-      // Forçar reload para que o widget (iframe) aplique a tradução com base no cookie.
-      // Usamos location.reload(true) em ambientes antigos; só location.reload() para compatibilidade.
-      location.reload();
+      document.cookie = name + "=" + (value || "") + expires + "; path=/";
     }
-  }, 300);
-}
-</script>
+
+    function applySelectLang(lang) {
+      var select = document.querySelector(".goog-te-combo");
+      if (!select) return false;
+      try {
+        select.value = lang;
+        var ev = new Event("change", { bubbles: true });
+        select.dispatchEvent(ev);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function translateTo(lang) {
+      // 1) tentativa imediata
+      if (applySelectLang(lang)) return;
+
+      // 2) polling para aguardar carregamento do Google
+      var attempts = 0;
+      var maxAttempts = 20;
+      var interval = setInterval(function() {
+        attempts++;
+        if (applySelectLang(lang)) {
+          clearInterval(interval);
+          return;
+        }
+        if (attempts >= maxAttempts) {
+          clearInterval(interval);
+
+          // 3) fallback via cookie
+          var from = 'pt';
+          var to = lang;
+          setCookie("googtrans", "/" + from + "/" + to, 24);
+          location.reload();
+        }
+      }, 300);
+    }
+  </script>
+
+</body>
+</html>
 
 
 
