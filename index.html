@@ -1,15 +1,16 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Helder Nascimento</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  
   <style>
     :root{
       --bg:#f4f6f8;
       --card:#ffffff;
-      --accent:#263238; /* dark header */
+      --accent:#263238;
       --gold:#d78a2f;
       --muted:#7b8790;
     }
@@ -17,7 +18,6 @@
     body{font-family:'Open Sans',sans-serif;background:var(--bg);margin:30px;color:#222}
     .resume{max-width:900px;margin:0 auto;background:var(--card);border-radius:8px;overflow:hidden;box-shadow:0 8px 24px rgba(9,30,66,0.08)}
 
-    /* top header */
     .hero{background:var(--accent);color:#fff;padding:30px 40px;display:flex;align-items:center;gap:20px}
     .hero .avatar{width:110px;height:110px;border-radius:50%;overflow:hidden;border:4px solid rgba(255,255,255,0.12);flex-shrink:0}
     .hero .avatar img{width:100%;height:100%;object-fit:cover;display:block}
@@ -27,7 +27,6 @@
     .contacts{margin-top:12px;display:flex;gap:12px;flex-wrap:wrap}
     .chip{background:rgba(255,255,255,0.06);padding:6px 10px;border-radius:20px;font-size:13px;color:#dbe6ea}
 
-    /* content */
     .content{display:grid;grid-template-columns:1fr 1fr;gap:30px;padding:28px 40px}
     .col{min-height:200px}
     h2{font-family:'Montserrat',sans-serif;font-size:14px;margin:0 0 12px;color:var(--accent)}
@@ -38,14 +37,11 @@
     .item .meta{font-size:13px;color:var(--muted);margin-bottom:6px}
     .item p{margin:0;font-size:14px;color:#333}
 
-    /* divider looks */
     .left .section{border-right:1px dashed rgba(0,0,0,0.04);padding-right:22px}
     .right .section{padding-left:22px}
 
-    /* footer small */
     .small{font-size:13px;color:var(--muted)}
 
-    /* responsive */
     @media (max-width:760px){
       .content{grid-template-columns:1fr;padding:20px}
       .left .section{border-right:none;padding-right:0}
@@ -53,13 +49,33 @@
       .hero{flex-direction:column;align-items:center;text-align:center}
       .hero .meta{width:100%}
     }
+
+    /* ==== ESCONDER GOOGLE TRANSLATE ORIGINAL ==== */
+    #google_translate_element,
+    .goog-te-banner-frame,
+    .goog-te-gadget {
+        display: none !important;
+    }
+    body { top: 0 !important; }
   </style>
 </head>
+
 <body>
+
+  <!-- ==== BANDEIRAS DE IDIOMA (PT / EN) ==== -->
+  <div style="position: fixed; top: 10px; right: 10px; z-index: 99999; display:flex; gap:10px;">
+    <img src="https://flagcdn.com/us.svg" width="40"
+         style="cursor:pointer; border-radius:4px; box-shadow:0 0 6px rgba(0,0,0,0.2);"
+         alt="English" onclick="translateTo('en')">
+
+    <img src="https://flagcdn.com/br.svg" width="40"
+         style="cursor:pointer; border-radius:4px; box-shadow:0 0 6px rgba(0,0,0,0.2);"
+         alt="Português" onclick="translateTo('pt')">
+  </div>
+
   <main class="resume">
     <header class="hero">
       <div class="avatar">
-        <!-- substitua avatar.png pela sua foto -->
         <img src="avatar.png" alt="Avatar">
       </div>
       <div class="meta">
@@ -78,22 +94,23 @@
         <div class="section">
           <h2>Experiência</h2>
 
-
           <div class="item">
             <div class="title">Analista de Sistemas — CESUPA</div>
             <div class="meta">ago de 2022 - o momento 3 anos 4 meses</div>
-            <p class="muted">Gestão e suporte Totvs Educacional – linha Educacional e suas respectivas bases no Banco de dados SQLServer; relatórios gerenciais, query SQL, fórmulas e manutenção das parametrizações para os respectivos módulos.</p>
-			<br>Competências: Gestão em Sistemas · Totvs RM · Microsoft SQL Server · Treinamento de equipes · Desenvolvimento de automações Python · Desenvolvimento de sistemas</br>
-			<br>Competências: Microsoft SQL Server · Windows Server · TOTVS · Python</br>
+            <p class="muted">
+              Gestão e suporte Totvs Educacional – linha Educacional e suas respectivas bases no Banco de dados SQLServer; relatórios gerenciais, query SQL, fórmulas e manutenção das parametrizações para os respectivos módulos.
+            </p>
+            <br>Competências: Gestão em Sistemas · Totvs RM · Microsoft SQL Server · Treinamento de equipes · Desenvolvimento de automações Python · Desenvolvimento de sistemas</br>
+            <br>Competências: Microsoft SQL Server · Windows Server · TOTVS · Python</br>
           </div>
-
 
           <div class="item">
             <div class="title">Analista de Redes — CESUPA</div>
             <div class="meta">fev de 2021 - o momento 4 anos 10 meses</div>
-            <p class="muted">Responsável pela instalação e configuração dos serviços de TS (terminal serviçe) - Ambiente cuidadosamente planejado e dimensionado para atender os consultórios do hospital escola da instituição. As tecnologias utilizadas:</p>
+            <p class="muted">
+              Responsável pela instalação e configuração dos serviços de TS (terminal service) - Ambiente cuidadosamente planejado e dimensionado para atender os consultórios do hospital escola da instituição.
+            </p>
           </div>
-
 
           <h2>Educação</h2>
           <div class="item">
@@ -101,63 +118,60 @@
             <div class="meta">Faculdades Integradas Ipiranga</div>
             <p class="muted">Formação técnica e prática em desenvolvimento sistemas e bancos de dados.</p>
           </div>
-		  
-		  <div class="item">
+
+          <div class="item">
             <div class="title">Pós Graduação em Redes de Computadores com Ênfase em Certificações</div>
-            <div class="meta">CESUPA - Centro Universitário do Estado do Pará</div>
+            <div class="meta">CESUPA</div>
             <p class="muted">Redes de Computadores e Administração de Sistemas</p>
           </div>
-
         </div>
       </div>
 
       <div class="col right">
         <div class="section">
-         <section id="sobre">
-  <h2>Sobre</h2>
-  <p class="sobre-texto">
-    Profissional com sólida experiência na área de Tecnologia da Informação, atuando desde 2009 no Centro Universitário do Estado do Pará (CESUPA), com forte atuação em infraestrutura de redes, administração de sistemas, banco de dados e desenvolvimento.
-  </p>
-  <p>
-    Atualmente, exerce o cargo de Analista de Sistemas, sendo responsável pela gestão e suporte da solução TOTVS Educacional, com foco em manutenção de parametrizações, consultas SQL e geração de relatórios no ambiente SQL Server.
-  </p>
-  <p class="sobre-texto">
-    Também atua na área de Redes e Infraestrutura, com destaque para a implantação e configuração de serviços de Terminal Services (Windows Server 2016/2019), sistemas de banco de dados para prontuário eletrônico (SQL Server), infraestrutura de rede, controle de acesso, segurança, virtualização (VMware e Hyper-V), automação de rotinas e gerenciamento de servidores e serviços críticos.
-  </p>
-  <p class="sobre-texto">
-    Possui experiência complementar como desenvolvedor Front-End em projetos institucionais, além de ampla familiaridade com tecnologias como Active Directory, WSUS, MySQL, Mikrotik, PRTG, Squid, Veeam Backup, e sistemas de telefonia IP.
-  </p>
-</section>
+          <section id="sobre">
+            <h2>Sobre</h2>
+            <p class="sobre-texto">
+              Profissional com sólida experiência na área de Tecnologia da Informação, atuando desde 2009 no CESUPA.
+            </p>
+            <p>
+              Atualmente, exerce o cargo de Analista de Sistemas, sendo responsável pela gestão e suporte da solução TOTVS Educacional.
+            </p>
+            <p class="sobre-texto">
+              Atua também com infraestrutura, servidores Windows, SQL Server, redes, virtualização e automações.
+            </p>
+            <p class="sobre-texto">
+              Possui experiência complementar em desenvolvimento Front-End e diversas tecnologias corporativas.
+            </p>
+          </section>
 
           <h2>Certificações</h2>
           <ul class="small">
-            <li>Visão Geral do ITIL 4 - Ka SolutionKa / Verificação emitida em set de 2022</li>
+            <li>ITIL 4 - Ka Solution</li>
             <li>Curso de Virtualização - VMware / Hyper-V</li>
-			<li>Microsoft Windows Server 2016 - Udemy / Verificação emitida em dez de 2021 / Código da credencial ude.my / UC-e3d04f99-68a3-4e10-bce6-54ee5e46c217</li>
-            <li>Microsoft Azure AI Fundamentals (AI-900) - Ka SolutionKa / Verificação emitida em jan de 2021</li>
-			<li>Microsoft 365 Fundamentals (MS-900) - Ka SolutionKa / Verificação emitida em Dez de 2020</li>
-			<li>29900 - Microsoft Azure Fundamentals (AZ-900) - Ka SolutionKa / Verificação emitida em Nov de 2020</li>
-			<li>FUNDAMENTOS BÁSICOS DO SAP - Ka SolutionKa / Verificação emitida em Out de 2020</li>
-			<li>Imersão SkillMaker : Desenvolvendo Soft Skills Em Equipes De Trabalho - GSA Consultoria Educacional LTDA</li>
-			<li>Imersão Intesivo Multicloud - Multicloud Devops e IA</li>
+            <li>Windows Server 2016 - Udemy</li>
+            <li>Azure AI Fundamentals (AI-900)</li>
+            <li>Microsoft 365 Fundamentals (MS-900)</li>
+            <li>Azure Fundamentals (AZ-900)</li>
           </ul>
 
           <h2>Habilidades</h2>
-          <p class="small">MySQL • SQL Server • Python • VB.NET • HTML5 • CSS3 • JavaScript • VMware • Hyper-V</p>
-
+          <p class="small">
+            MySQL • SQL Server • Python • VB.NET • HTML5 • CSS3 • JavaScript • VMware • Hyper-V
+          </p>
         </div>
       </div>
     </section>
   </main>
 
-	!-- widget de tradução AQUI -->
-  <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+  <!-- ==== GOOGLE TRANSLATE INVISÍVEL ==== -->
+  <div id="google_translate_element"></div>
 
   <script type="text/javascript">
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({
         pageLanguage: 'pt',
-        includedLanguages: 'en,pt',
+        includedLanguages: 'pt,en',
         layout: google.translate.TranslateElement.InlineLayout.SIMPLE
       }, 'google_translate_element');
     }
@@ -165,6 +179,16 @@
 
   <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-	
+  <!-- Função para trocar idioma pelas bandeiras -->
+  <script>
+    function translateTo(lang){
+        var select = document.querySelector(".goog-te-combo");
+        if (select) {
+            select.value = lang;
+            select.dispatchEvent(new Event("change"));
+        }
+    }
+  </script>
+
 </body>
 </html>
