@@ -1,0 +1,21 @@
+/* Esconde visualmente o widget, mas SEM bloquear seu funcionamento */
+#google_translate_element,
+.goog-te-banner-frame {
+    display: none !important;
+}
+
+/* NÃO pode usar display:none — isso quebra o Translate */
+.goog-te-gadget {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+}
+
+body {
+    top: 0 !important;
+}
